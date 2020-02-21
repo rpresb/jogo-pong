@@ -1,48 +1,29 @@
 import React, { useContext } from 'react';
-import PLayerList from './PlayerList';
+import PlayerList from './PlayerList';
 import Chat from './Chat';
-import { GameContext, sendMessage, createRoom, leaveRoom, joinRoom } from '../contexts/GameContext';
+import { GameContext, sendMessage } from '../contexts/GameContext';
+import Rooms from './Rooms';
 
 const Pong = () => {
-    const { isConnected, players, messages, player, rooms } = useContext(GameContext);
-
+    const { isConnected, players, messages, match } = useContext(GameContext);
+console.log(match);
     return (
         <>
             {!isConnected &&
                 <div>Desconectado, conectando...</div>
             }
 
-            <div>
-                <div style={{ marginBottom: '20px' }}>
-                    {!player.room &&
-                        <div>
-                            <button onClick={createRoom}>Criar Sala</button>
-                            {Object.keys(rooms).map((key) =>
-                                <div key={`room_${key}`}>
-                                    {rooms[key].name}
-                                    <button onClick={() => joinRoom(key)} disabled={rooms[key].player1 && rooms[key].player2}>Entrar</button>
-                                </div>
-                            )}
-                        </div>
-                    }
-                    {player.room &&
-                        <div>
-                            {rooms[player.room] && rooms[player.room].player1 && rooms[player.room].player2 ?
-                                <button>Iniciar Jogo</button>
-                                :
-                                <>
-                                    Aguardando outro jogador conectar na sala
-                                    <button onClick={leaveRoom}>Sair da Sala</button>
-                                </>
-                            }
-                        </div>
-                    }
-                </div>
+            {match.status && <div>Jogo</div>}
+
+            {!match.status &&
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <PLayerList players={players} />
+                    <div className='list-container'>
+                        <Rooms />
+                        <PlayerList players={players} />
+                    </div>
                     <Chat sendMessage={sendMessage} messages={messages} />
                 </div>
-            </div>
+            }
         </>
     );
 };

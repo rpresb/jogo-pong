@@ -34,6 +34,11 @@ const reducer = (state, action) => {
                 ...state,
                 rooms: action.payload
             };
+        case 'MATCH':
+            return {
+                ...state,
+                match: action.payload
+            };
         case 'ADD_MESSAGE':
             return {
                 ...state,
@@ -50,7 +55,8 @@ const initialState = {
     room: {},
     rooms: {},
     players: {},
-    messages: []
+    messages: [],
+    match: {}
 };
 
 const GameProvider = (props) => {
@@ -74,7 +80,10 @@ const GameProvider = (props) => {
             dispatch({ type: 'ROOMS', payload: rooms });
             dispatch({ type: 'ROOM', payload: socket.id });
         });
-
+        socket.on('MatchRefresh', (match) => {
+            console.log(match);
+            dispatch({ type: 'MATCH', payload: match });
+        });
         socket.open();
     }, []);
 

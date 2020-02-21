@@ -5,7 +5,7 @@ import { GameProvider } from './contexts/GameContext';
 
 function App() {
   return (
-    <div className="App">
+    <div className="main-container">
       <GameProvider>
         <Pong />
       </GameProvider>

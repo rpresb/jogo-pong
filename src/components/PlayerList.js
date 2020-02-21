@@ -1,16 +1,17 @@
 import React from 'react';
 
-const PLayerList = (props) => {
+const PlayerList = (props) => {
  
     return (
-        <div>
+        <div className='list-group'>
+            <span className='list-title'>Jogadores</span>
             {Object.keys(props.players)
                 .map((key) => (
-                    <div key={key}>{props.players[key].name}</div>
+                    <div key={key} className='list-item'>{props.players[key].name}</div>
                 ))
             }
         </div>
     );
 };
 
-export default PLayerList;
+export default PlayerList;
