@@ -58,8 +58,8 @@ input {
 }
 
 button.disabled {
-  color: rgb(114, 114, 114);
-  background-color: rgb(170, 180, 255);
+    color: rgb(114, 114, 114);
+    background-color: rgb(170, 180, 255);
 }
 
 .chat-container {
@@ -72,13 +72,23 @@ button.disabled {
 }
 
 .chat-form {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .chat-content {
-  white-space: pre-wrap;
-  overflow: auto;
-  height: calc(100vh - 120px);
+    white-space: pre-wrap;
+    overflow: auto;
+    height: calc(100vh - 120px);
+}
+
+.game-message {
+    position: absolute;
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    text-align: center;
+    left: 120px;
+    top: 60px;
 }

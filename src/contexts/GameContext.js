@@ -81,7 +81,6 @@ const GameProvider = (props) => {
             dispatch({ type: 'ROOM', payload: socket.id });
         });
         socket.on('MatchRefresh', (match) => {
-            console.log(match);
             dispatch({ type: 'MATCH', payload: match });
         });
         socket.open();
@@ -110,11 +109,16 @@ const joinRoom = (roomId) => {
     socket.emit('JoinRoom', roomId);
 };
 
+const gameLoaded = () => {
+    socket.emit('GameLoaded');
+};
+
 export {
     GameContext,
     GameProvider,
     sendMessage,
     createRoom,
     leaveRoom,
-    joinRoom
+    joinRoom,
+    gameLoaded
 };

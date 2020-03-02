@@ -3,17 +3,18 @@ import PlayerList from './PlayerList';
 import Chat from './Chat';
 import { GameContext, sendMessage } from '../contexts/GameContext';
 import Rooms from './Rooms';
+import Game from './Game';
 
 const Pong = () => {
     const { isConnected, players, messages, match } = useContext(GameContext);
-console.log(match);
+
     return (
         <>
             {!isConnected &&
                 <div>Desconectado, conectando...</div>
             }
 
-            {match.status && <div>Jogo</div>}
+            {match.status && <Game />}
 
             {!match.status &&
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
