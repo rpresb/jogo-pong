@@ -1,53 +1,93 @@
 import React, { useEffect, useContext } from 'react';
 import SVG, { Circle, Rect, Line } from 'react-svg-draw';
-import { gameLoaded, GameContext, leaveRoom } from '../contexts/GameContext';
+import { gameLoaded, GameContext, leaveRoom, sendKey } from '../contexts/GameContext';
 
 const Game = () => {
     const { match } = useContext(GameContext);
-    const { gameConfig, ball, message } = match;
+    const { gameConfig, ball, message, player1, player2 } = match;
 
     useEffect(() => {
         gameLoaded();
+
+        const sendKeyEvent = (e) => {
+            const { key, type } = e;
+
+            switch (key) {
+                case 'ArrowUp':
+                case 'ArrowDown':
+                    sendKey(type, key);
+                    e.preventDefault();
+                    break;
+            }
+        };
+
+        document.addEventListener('keydown', sendKeyEvent);
+        document.addEventListener('keyup', sendKeyEvent);
+
+        return () => {
+            document.removeEventListener('keydown', sendKeyEvent);
+            document.removeEventListener('keyup', sendKeyEvent);
+        };
     }, []);
 
     return (
         <div style={{ position: 'relative' }}>
-            <SVG width={gameConfig.width} height={gameConfig.height}>
+            <SVG width={gameConfig.width.toString()} height={gameConfig.height.toString()}>
                 <Rect
                     x="0"
                     y="0"
-                    width={gameConfig.width}
-                    height={gameConfig.height}
+                    width={gameConfig.width.toString()}
+                    height={gameConfig.height.toString()}
                     style={{ fill: 'rgb(0, 0, 0)' }}
                 />
                 <Line
-                    x1={gameConfig.width / 2}
+                    x1={(gameConfig.width / 2).toString()}
                     y1='0'
-                    x2={gameConfig.width / 2}
-                    y2={gameConfig.height}
-                    stroke-dasharray="5,5"
-                    stroke-width="5"
+                    x2={(gameConfig.width / 2).toString()}
+                    y2={gameConfig.height.toString()}
+                    strokeDasharray="5,5"
+                    strokeWidth="5"
                     style={{ stroke: 'rgba(255, 255, 255, 0.5)' }}
                 />
 
                 <text
-                    x={gameConfig.width / 2 - 20}
+                    x={(gameConfig.width / 2 - 20).toString()}
                     y='45'
                     style={{ direction: 'rtl', fill: 'rgba(255, 255, 255, 0.7)', fontSize: '50px' }}
                 >{match.score1}</text>
 
                 <text
-                    x={gameConfig.width / 2 + 20}
+                    x={(gameConfig.width / 2 + 20).toString()}
                     y='45'
                     style={{ fill: 'rgba(255, 255, 255, 0.7)', fontSize: '50px' }}
                 >{match.score2}</text>
 
                 {ball &&
                     <Circle
-                        cx={ball.x}
-                        cy={ball.y}
-                        r={ball.width}
+                        cx={ball.x.toString()}
+                        cy={ball.y.toString()}
+                        r={ball.width.toString()}
                         style={{ fill: '#fff' }}
+                    />
+                }
+
+                {player1 &&
+                    <Rect
+                        x={player1.x.toString()}
+                        y={player1.y.toString()}
+                        width={player1.width.toString()}
+                        height={player1.height.toString()}
+                        style={{ fill: 'rgb(255, 255, 255)' }}
+                    />
+                }
+
+                {player2 &&
+                    <Rect
+                        x={player2.x.toString()}
+                        y={player2.y.toString()}
+                        width={player2.width.toString()}
+                        height={player2.height.toString()}
+                        style={{ fill: 'rgb(255, 255, 255)' }}
                     />
                 }
             </SVG>

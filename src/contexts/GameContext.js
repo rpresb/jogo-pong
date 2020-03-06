@@ -113,6 +113,16 @@ const gameLoaded = () => {
     socket.emit('GameLoaded');
 };
 
+let lastType = undefined;
+const sendKey = (type, key) => {
+    if (lastType === type) {
+        return;
+    }
+
+    lastType = type;
+    socket.emit('SendKey', { type, key });
+};
+
 export {
     GameContext,
     GameProvider,
@@ -120,5 +130,6 @@ export {
     createRoom,
     leaveRoom,
     joinRoom,
-    gameLoaded
+    gameLoaded,
+    sendKey
 };
