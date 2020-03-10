@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import socketClient from 'socket.io-client';
 
-const socket = socketClient('http://localhost:4000', {
+const socket = socketClient('https://secret-taiga-81699.herokuapp.com', {
     autoConnect: false,
 });
 

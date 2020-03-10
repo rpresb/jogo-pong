@@ -18,6 +18,8 @@ const Game = () => {
                     sendKey(type, key);
                     e.preventDefault();
                     break;
+                default:
+                    break;
             }
         };
 
