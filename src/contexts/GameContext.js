@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import socketClient from 'socket.io-client';
 
-const socket = socketClient('https://secret-taiga-81699.herokuapp.com', {
+const socket = socketClient(process.env.REACT_APP_SOCKET_ADDRESS, {
     autoConnect: false,
 });
 
@@ -82,6 +82,9 @@ const GameProvider = (props) => {
         });
         socket.on('MatchRefresh', (match) => {
             dispatch({ type: 'MATCH', payload: match });
+        });
+        socket.on('MatchClear', () => {
+            dispatch({ type: 'MATCH', payload: {} });
         });
         socket.open();
     }, []);

@@ -14,7 +14,14 @@ const Pong = () => {
                 <div>Desconectado, conectando...</div>
             }
 
-            {match.status && <Game />}
+            {match.status &&
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <Game />
+                    <pre>
+                        <code>{JSON.stringify(match, null, 2)}</code>
+                    </pre>
+                </div>
+            }
 
             {!match.status &&
                 <div style={{ display: 'flex', flexDirection: 'row' }}>

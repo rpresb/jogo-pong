@@ -14,7 +14,12 @@ const Rooms = () => {
                 Object.keys(rooms).map((key) =>
                     <div key={`room_${key}`} className='list-item'>
                         {rooms[key].name}
-                        <button onClick={() => joinRoom(key)} disabled={rooms[key].player1 && rooms[key].player2}>Entrar</button>
+                        {rooms[key].score1 === undefined &&
+                            <button onClick={() => joinRoom(key)} disabled={rooms[key].player1 && rooms[key].player2}>Entrar</button>
+                        }
+                        {rooms[key].score1 !== undefined && 
+                            <span>{rooms[key].score1} x {rooms[key].score2}</span>
+                        }
                     </div>
                 )
             }
